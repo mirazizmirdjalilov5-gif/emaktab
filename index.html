@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prank Forma – Hakerega yuborildi 😈</title>
+  <style>
+    :root {
+      --bg1: #0f172a; /* slate-900 */
+      --bg2: #1e293b; /* slate-800 */
+      --accent: #6366f1; /* indigo-500 */
+      --accent-2: #22d3ee; /* cyan-400 */
+      --text: #e5e7eb; /* gray-200 */
+      --muted: #94a3b8; /* slate-400 */
+      --danger: #ef4444; /* red-500 */
+      --ok: #10b981; /* emerald-500 */
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 20% 20%, rgba(34,211,238,.15), transparent 50%),
+                  radial-gradient(900px 500px at 80% 10%, rgba(99,102,241,.15), transparent 50%),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(480px, 96vw);
+      background: rgba(2, 6, 23, .6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(148, 163, 184, .15);
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.05);
+      overflow: hidden;
+    }
+
+    .card__header {
+      position: relative;
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid rgba(148,163,184,.12);
+    }
+
+    .badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 12px;
+      letter-spacing: .06em;
+      color: var(--muted);
+      padding: 6px 10px;
+      border: 1px dashed rgba(99,102,241,.45);
+      border-radius: 999px;
+      background: rgba(99,102,241,.08);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    p.sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    form {
+      padding: 22px 28px 28px;
+      display: grid;
+      gap: 14px;
+    }
+
+    label { font-size: 14px; color: var(--muted); }
+
+    .field { display: grid; gap: 8px; }
+
+    .input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,.22);
+      background: rgba(15,23,42,.6);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .input::placeholder { color: #64748b; }
+    .input:focus {
+      border-color: rgba(99,102,241,.8);
+      box-shadow: 0 0 0 4px rgba(99,102,241,.20);
+    }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .actions { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+
+    .btn {
+      appearance: none;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .05s ease, box-shadow .15s ease, background .2s ease;
+      outline: none;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0b1220;
+      box-shadow: 0 10px 20px rgba(99,102,241,.25), 0 6px 14px rgba(34,211,238,.15);
+    }
+    .btn--primary:active { transform: translateY(1px); }
+
+    .btn--ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(148,163,184,.22);
+    }
+
+    .helper { font-size: 12px; color: var(--muted); }
+
+    /* Modal */
+    .modal {
+      position: fixed; inset: 0;
+      display: none; /* toggled by JS */
+      place-items: center;
+      padding: 24px;
+      background: rgba(2,6,23,.55);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+    }
+    .modal[aria-hidden="false"] { display: grid; }
+
+    .modal__card {
+      width: min(520px, 96vw);
+      background: #0b1220;
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 24px 50px rgba(0,0,0,.45);
+      text-align: center;
+    }
+
+    .pulse {
+      width: 70px; height: 70px; margin: 6px auto 14px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #22d3ee 0 20%, #6366f1 60%, transparent 61%);
+      position: relative;
+      animation: spin 2.8s linear infinite;
+    }
+    .pulse::after, .pulse::before {
+      content: ""; position: absolute; inset: -10px; border-radius: 50%;
+      border: 2px solid rgba(99,102,241,.4); animation: ring 2s ease-out infinite;
+    }
+    .pulse::before { animation-delay: .6s; }
+
+    @keyframes ring { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .modal__title { font-size: 22px; font-weight: 900; margin: 10px 0 6px; }
+    .modal__text { color: var(--muted); margin: 0 0 16px; }
+
+    .modal__cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(148,163,184,.22);
+      background: rgba(99,102,241,.08); color: var(--text); font-weight: 700; cursor: pointer;
+    }
+
+    .footer-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; }
+    .footer-note strong { color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-labelledby="title">
+    <div class="card__header">
+      <div class="badge">GAME MODE</div>
+      <h1 id="title">Ro‘yxatdan o‘tish  👀</h1>
+      <p class="sub"> <strong>registr</strong> </p>
+    </div>
+
+    <form id="fakeForm" novalidate>
+      <div class="row">
+        <div class="field">
+          <label for="name">Ism</label>
+          <input id="name" class="input" type="text" placeholder="Miraziz" required />
+        </div>
+        <div class="field">
+          <label for="surname">Familiya</label>
+          <input id="surname" class="input" type="text" placeholder="Hacker" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" class="input" type="email" placeholder="siz@example.com" required />
+      </div>
+
+      <div class="field">
+        <label for="password">Parol</label>
+        <input id="password" class="input" type="password" placeholder="******" minlength="6" required />
+        <span class="helper">Kamida 6 ta belgi.</span>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn--primary">Davom etish</button>
+        <button type="reset" class="btn btn--ghost">Tozalash</button>
+      </div>
+
+      <div class="footer-note"> <strong></strong></div>
+    </form>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="prankModal" aria-hidden="true" aria-labelledby="modalTitle" role="dialog">
+    <div class="modal__card">
+      <div class="pulse" aria-hidden="true"></div>
+      <div class="modal__title" id="modalTitle">Bu ma'lumotlar <span style="white-space:nowrap">Hakerega yuborildi</span>! 😈</div>
+      <p class="modal__text">Haker ning ismi Miraziz u sizning lokalingizni buzib kirdi</p>
+      <button class="modal__cta" id="closeModal" type="button" aria-label="Yopish">Agar norozilik bolsa manashu linkga murojat qiling <a href="https://emaktab.uz/chat/chat_students_2261484728832599210@muclight.xmpp.emaktab.uz"> Miraziz Mirdjalilovga murojat qiling</a></button>
+    </div>
+  </div>
+
+  <script>
+    // Minimal JS – yuborish tugmasi bosilganda modalni ko'rsatamiz
+    const form = document.getElementById('fakeForm');
+    const modal = document.getElementById('prankModal');
+    const closeBtn = document.getElementById('closeModal');
+
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      // Fokusni modal tugmasiga o'tkazamiz (accessibility)
+      closeBtn.focus();
+    }
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Oddiy client-side validatsiya
+      if (!form.checkValidity()) {
+        // Agar noto'g'ri bo'lsa, brauzer default tooltipsini ishlatamiz
+        form.reportValidity();
+        return;
+      }
+      openModal();
+      // Prank: ma'lumotni hech qayerga yubormaymiz va darhol inputlarni tozalaymiz
+      form.reset();
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    // Escape bosilganda yopish
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+
+    // Modal tashqarisiga bosilsa yopish
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  </script>
+</body>
+</html>
